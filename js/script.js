@@ -19,7 +19,7 @@ window.onscroll = () => {
         let height=sec.offsetHeight;
         let id=sec.getAttribute('id');
         
-        if(top>=offset && top <offset+height){
+        if(top>=offset && top < offset+height){
             navLinks.forEach(links=>{
                 links.classList.remove('active');
                 document.querySelector('header nav a[href*='+id+']').classList.add('active');
@@ -70,3 +70,24 @@ const typed=new Typed('.multiple-text',{
     loop:true
 
 });
+
+
+/*==================== google sheet add script ====================*/
+
+
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbxwwnW4TJM_4LUcleRSDFcNIkITaMcBHQ1Rq9XIf-NmwnOwAZWoZxFJncTUb5ATF0w/exec'
+  const form = document.forms['submit-to-google-sheet']
+  const msg = document.getElementById("msg")
+
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => {
+        msg.innerHTML = "Massage sent successfully"
+        setTimeout(function(){
+            msg.innerHTML = ""
+        },5000)
+        form.reset()
+      })
+      .catch(error => console.error('Error!', error.message))
+  })
